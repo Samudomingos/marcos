@@ -1,16 +1,29 @@
 <?php
 class usuarioController extends controller {
 
+	private $mpdf;
+	private $usuario;
+
 	public function __construct(){
 
 	if(!isset($_SESSION['userOn'])){
 			header("Location: ".BASE_URL.'login');
 		}
+		require_once './vendor/autoload.php';
+
+		$this->mpdf = new Mpdf\Mpdf();
+		$this->usuario = new Usuario();
 	}
 
 	public function index() {
-		$data = array();
+		 require_once './vendor/autoload.php';
+		 $data = array();
+
+
+		 
+		
 		$usuario = new Usuario();
+
 		if(
 			isset($_POST['nome']) && !empty($_POST['nome']) 
 			&& isset($_POST['cpf']) && !empty($_POST['cpf']) 
@@ -40,6 +53,24 @@ class usuarioController extends controller {
 		}
 
 		$this->loadTemplate('usuarios', $data);
+	}
+
+	public function visualizar($id){
+		$data = array();
+		$usuario = new Usuario();
+		$user = $usuario->getUsuario($id);
+
+		$data['nome'] = $user['nome'];
+		$data['cpf'] = $user['cpf'];
+		$data['dt_nasc'] = $user['dt_nasc'];
+		$data['telefone'] = $user['telefone'];
+		$data['email'] = $user['email'];
+		$data['salario'] = $user['salario'];
+		$data['img'] = $user['img'];
+
+		$this->loadTemplate('visualizar', $data);
+
+
 	}
 
 	public function alterar($id){
@@ -72,11 +103,39 @@ class usuarioController extends controller {
 			}else{
 				$tmpname = $user['img'];
 			}
+			$salario = $_POST['salario'];
+			$salario = str_replace('.', '', $salario);
+			$salario = str_replace(',', '.', $salario);
 
-			$usuario->update($user['id'],$_POST['nome'], $_POST['cpf'], $_POST['dt_nasc'], $_POST['tel'], $_POST['email'], $_POST['salario'], $tmpname);
+			$usuario->update($user['id'],$_POST['nome'], $_POST['cpf'], $_POST['dt_nasc'], $_POST['tel'], $_POST['email'], $salario, $tmpname);
 		}
 
 		$this->loadTemplate('editar', $data);
+	}
+
+	public function excluir($id){
+		$this->usuario->deletar($id);
+		$data = array();
+		
+	}
+
+	public function pdf(){
+		$data = array();
+		 
+		$data['clients'] = $this->usuario->select();;
+		$data['pdf'] = $this->mpdf;
+		$this->loadView('pdf',$data);
+	}
+
+	public function deslogar(){
+		session_unset();
+		header("Location:".BASE_URL);
+	}
+
+	public function excel(){
+		$data = array();
+		$data['clients'] = $this->usuario->select();;
+		$this->loadView('excel',$data);
 	}
 
 }

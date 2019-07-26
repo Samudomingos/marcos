@@ -60,6 +60,48 @@ $(function() {
   bs_input_file();
 });
 
+function previewImagem(){
+  var imagem = document.querySelector('input[name=foto]').files[0];
+  var preview = document.querySelector('#preview');
+  var pronto = new FileReader();
+
+  pronto.onloadend = function(){
+    preview.src= pronto.result;
+  }
+
+  if(imagem){
+    pronto.readAsDataURL(imagem);
+  }else{
+    preview.src="";
+  }
+}
+
+function receber(){
+  var id = $('#id').val();
+  console.log(id);
+  var qt = $('td').length;
+
+  for (var i=0 ; i < qt; i+=7) {
+    if($('td')[i].innerHTML == id){
+      var  nome = $('td')[i+1].innerHTML;
+      var cpf = $('td')[i+3].innerHTML;
+
+  }
+
+  $('#nome').html(nome);
+  $('#cpf').html(cpf);
+
+  }
+
+  $('#editar').click(function(){
+    window.location.href = "http://marcos.crud.com/usuario/alterar/"+id;
+  });
+  $('#excluir').click(function(){
+    window.location.href = "http://marcos.crud.com/usuario/excluir/"+id;
+  });
+  
+}
+
 $('#editaForm').on('submit',function(e){
   e.preventDefault();
   let url_atual = window.location.href;
@@ -75,11 +117,15 @@ $('#editaForm').on('submit',function(e){
     contentType:false,
     processData:false,
     success:function(msg){
-      alert(msg);
+      alert("Usuário alterado com sucesso!");
     }
   });
 
 
-})
+});
+
+
+
+
 
 

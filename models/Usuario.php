@@ -10,6 +10,25 @@ class Usuario extends model
 		$this->conn = $conn;
 	}
 
+	public function deletar($id){
+		$sql= "DELETE FROM clients WHERE id = '$id'";
+		$sql = $this->conn->query($sql);
+		if($sql->rowCount()>0){
+			header("Location:".BASE_URL);
+		}
+	}
+
+	public function execute($q){
+		$data = array();
+		$query = $this->conn->query($q);
+
+		if($query->rowCount()>0){
+			$data = $query->fetchAll();
+		}
+
+		return $data;
+	}
+
 	public function apagarImagem($img){
 		if($img != 'default.jpg'){
 			unlink('./assets/img/users/'.$img);

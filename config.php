@@ -9,11 +9,11 @@ if(ENVIRONMENT == 'development') {
 	$config['dbuser'] = 'root';
 	$config['dbpass'] = '';
 } else {
-	define("BASE_URL", "https://samudomingos.com.br/");
-	$config['dbname'] = 'samudo79_samudomingos';
+	define("BASE_URL", "https://marcos-crud.000webhostapp.com/");
+	$config['dbname'] = 'id10250491_marcoss';
 	$config['host'] = 'localhost';
-	$config['dbuser'] = 'samudo79_samu';
-	$config['dbpass'] = '@m@nd@1l0v3y0u321';
+	$config['dbuser'] = 'id10250491_marcos';
+	$config['dbpass'] = '19082001sh';
 }
 
 global $conn;

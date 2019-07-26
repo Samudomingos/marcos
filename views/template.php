@@ -1,7 +1,4 @@
-<?php 
-  $user = new Usuario();
-  $url = $user->getUrl();
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,15 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
     <title>Marcos</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="<?php echo BASE_URL ?>node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
  	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL ?>assets/css/style.css">
   <link href="<?php echo BASE_URL ?>assets/css/jquery-ui.min.css" rel="stylesheet">
 
 </head>
 
-<body style="background-color:#b8cad4 ">
+<body style="background-color:rgb(246,247,250); ">
 <div class="page-wrapper chiller-theme toggled">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
@@ -34,7 +30,7 @@
       </div>
       <div class="sidebar-header">
         <div class="user-pic">
-          <img class="img-responsive img-rounded" src=""
+          <img class="img-responsive img-rounded" height="120" width="120" src="<?php echo BASE_URL ?>assets/img/photo.jpg"
             alt="User picture">
         </div>
         <div class="user-info">
@@ -150,10 +146,10 @@
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">Excel</a>
+                  <a href="<?php echo BASE_URL ?>usuario/excel">Excel</a>
                 </li>
                 <li>
-                  <a href="#">PDF</a>
+                  <a target="_blank" href="<?php echo BASE_URL ?>usuario/pdf">PDF</a>
                 </li>
                <!--  <li>
                   <a href="#">Bar chart</a>
@@ -184,7 +180,7 @@
             <span>Extra</span>
           </li>
           <li>
-            <a href="#">
+            <a style="cursor: pointer;" id="import-click">
               <i class="fa fa-book"></i>
               <span>Importação</span>
               <span class="badge badge-pill badge-primary">Beta</span>
@@ -220,7 +216,7 @@
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
       </a>
-      <a href="#">
+      <a href="<?php echo BASE_URL ?>usuario/deslogar">
         <i class="fa fa-power-off"></i>
       </a>
     </div>
@@ -228,24 +224,37 @@
   <!-- sidebar-wrapper  -->
   	<main class="page-content mt-0 pt-0">
 	    <div class="container-fluid">
-        <?php if( $_SERVER["REQUEST_URI"] == '/'): ?>
-	        <h2>Gerenciador de Usuários</h2>
-        <?php endif ?>
-        <?php if($_SERVER['REQUEST_URI'] == '/usuario'): ?>
-           <h2>Gerenciador de Usuários</h2>
-        <?php endif; ?>   
-        <?php if($_SERVER["REQUEST_URI"] == $url): ?>
-        <h2>Editar Usuário</h2>
-        <?php endif; ?>
-        <hr>
-	      <!-- <div class="row">
-	        <div class="form-group col-md-12">
-	          <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.</p>
-	          <p> You can find the complete code on <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
-	              Github</a>, it contains more themes and background image option</p>
-	        </div> -->
-  		
-			<?php $this->loadViewInTemplate($viewName, $viewData); ?>
+        <div>
+  	      <!-- <div class="row">
+  	        <div class="form-group col-md-12">
+  	          <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.</p>
+  	          <p> You can find the complete code on <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
+  	              Github</a>, it contains more themes and background image option</p>
+  	        </div> -->
+			     <?php $this->loadViewInTemplate($viewName, $viewData); ?>
+        </div>
+<!-- Modal -->
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Importação <i class=" text-success far fa-file-excel"></i></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <a href="" type="submit" class="btn btn-primary">Salvar</a>
+        </div>
+      </form>  
+    </div>
+  </div>
+</div>
 		</div>	
 	</main>
   <!-- page-content" -->
@@ -261,8 +270,47 @@
 
     <script type="text/javascript">
 
-		$(document).ready(function() {
+      $('#import-click').click(function(){
+        $('#import').modal('show');
+      });
+      
+      var url = window.location.href;
+      console.log(url+'ajax');
+      $(document).ready(function() {
+    $('#example').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": url+'ajax',
+            "type": "POST"
+        },
+        pageLength : 10,
+          "pagingType": "full_numbers",
+            "language": {
+              "search": "Procurar",
+            "paginate": {
+              "first":"Primeiro",
+              "previous": "Anterior",
+              "next": "Próximo",
+              "last": "Último"
+            }
+          },
+          "ordering": true,
+          "dom": '<"toolbar">frtip',
+          "info":false,
+          "show": false
+    } );
+
+		/*$(document).ready(function() {
+      console.log(window.location.href);
 		    $('#example').DataTable({
+          "processing":true,
+          "serverSide":true,
+          "ajax":{
+            "url": window.location.href,
+            "type": "POST"
+          },
+          pageLength : 6,
 		    	"pagingType": "full_numbers",
 		    	  "language": {
 		    	  	"search": "Procurar",
@@ -277,7 +325,7 @@
 		    	"dom": '<"toolbar">frtip',
     			"info":false,
     			"show": false
-		    });
+		    });*/
     $('.datepicker').mask('00/00/0000');    
     $('.cpf').mask('000.000.000-00', {reverse: true});
     $('.tel').mask('(00) 00000-0000');
@@ -285,6 +333,9 @@
 		$('.form-control').removeClass('form-control-sm');
 		$('#example_paginate').addClass('d-flex justify-content-center');
     $('.dataTables_empty').html('<h6>Não existem úsuarios cadastrados<h6>');
+
+
+
 		} );
 	</script>
 </body>

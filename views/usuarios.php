@@ -1,3 +1,5 @@
+<h2 class="mt-1">Cadastrar Usuário <i class="fas fa-user"></i></h2>
+<hr>
 <form method="POST" enctype="multipart/form-data">
   <div class="row">
     <div class="col-md">
@@ -42,16 +44,19 @@
     </div>
   </div>
   <div class="row d-flex justify-content-center">
-    <div class="col-md-4">
+    <div class="col-md-6">
+      <label></label>
       <div class="form-group">
-            <input type="file" name="foto" class="form-control" id="foto" placeholder='' />
+            <input type="file" name="foto" onchange="previewImagem()" class="form-control p-0" style="cursor: pointer;" id="foto" placeholder='' />
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <label></label>
       <div class="form-group">
         <input type="submit" class="form-control btn btn-primary" Value="Enviar">
       </div>
     </div>
   </div>
-</form>
+</form> 
+
+<img id="preview" width="150" height="150">
