@@ -222,40 +222,45 @@
     </div>
   </nav>
   <!-- sidebar-wrapper  -->
-  	<main class="page-content mt-0 pt-0">
-	    <div class="container-fluid">
-        <div>
+	<main class="page-content mt-0 pt-0">
+    <div class="container-fluid">
+      <div>
   	      <!-- <div class="row">
   	        <div class="form-group col-md-12">
   	          <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.</p>
   	          <p> You can find the complete code on <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
   	              Github</a>, it contains more themes and background image option</p>
   	        </div> -->
-			     <?php $this->loadViewInTemplate($viewName, $viewData); ?>
+		     <?php $this->loadViewInTemplate($viewName, $viewData); ?>
         </div>
-<!-- Modal -->
+		</div>
+
 <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Importação <i class=" text-success far fa-file-excel"></i></h5>
+        <h5 class="modal-title" id="exampleModalLabel">Importação <i class=" text-success fas fa-file-excel"></i></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
+      <form method="POST" enctype="multipart/form-data" action="<?php echo BASE_URL ?>">
         <div class="modal-body">
-          ...
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Escolha seu arquivo</label>
+              <input type="file" name="importData" class="form-control-file" id="exampleFormControlFile1">
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <a href="" type="submit" class="btn btn-primary">Salvar</a>
+          <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
-      </form>  
+      </form>
     </div>
   </div>
 </div>
-		</div>	
+
+
 	</main>
   <!-- page-content" -->
 </div>
@@ -284,6 +289,20 @@
             "url": url+'ajax',
             "type": "POST"
         },
+        "columnDefs": [
+        {
+            "targets": 0, //"Número referente a coluna, startando no 0"
+            "render": function (data, type, row) {
+                //Aqui tem um callback onde pode retornar o botão
+                //row - aqui você possui todos os atributos da sua linha
+                //Basta criar seu botão e como string e retornar;
+               
+                var deleteBtn = '<button type="button" id="'+data+'" data-toggle="modal" onclick="receber('+data+')" data-target="#exampleModalCenter" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="left" title="Excluir"><i class="far fa-trash-alt"></i></button>';
+                var editeBtn = '<a href="'+window.location.href+'usuario/alterar/'+data+'" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Editar"><i class="fas fa-edit"></i></a>';     
+                return editeBtn+' '+deleteBtn;
+            }
+        }
+    ],
         pageLength : 10,
           "pagingType": "full_numbers",
             "language": {

@@ -2,17 +2,6 @@
     <div class="col-md">
         <h2 class="mt-1">Gerenciador de Úsuários <i class="fas fa-users"></i></h2>
     </div>
-    <div class="col-md">
-        <div style="position: relative; top:100px" class="d-flex justify-content-end">
-<nav class="navbar navbar-light bg-light">
-  <div class="form-inline">
-    <input id="id" class="form-control mr-sm-2" type="search" placeholder="ID" aria-label="Search">
-    <button class="btn btn-outline-secondary my-2 my-sm-0" data-toggle="modal" onclick="receber()" data-target="#exampleModalCenter" type="button">Procurar</button>
-  </div>
-</nav>
-</div>
-    </div>
-    
 </div>
 <hr>
 
@@ -21,7 +10,7 @@
 <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead-dark">
             <tr>
-                <th>ID</th>
+                <th>Ações</th>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>CPF</th>
@@ -90,7 +79,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <h4>Você deseja <span class="text-danger">Excluir</span> ou <span class="text-primary">Editar</span> o úsuario?</h4>
+        <h4>Você deseja <span class="text-danger">Excluir</span> o úsuario?</h4>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -108,7 +97,6 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" id="editar" class="btn btn-primary">Editar</button>
         <button type="button" id="excluir" class="btn btn-danger">Excluir</button>
       </div>
     </div>

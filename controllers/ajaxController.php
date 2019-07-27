@@ -1,5 +1,5 @@
 <?php 
-
+header("Content-Type: text/html; charset=UTF-8",true);
 class ajaxController extends controller
 {
 	private $usuario;
@@ -42,16 +42,18 @@ class ajaxController extends controller
 		$result = $this->usuario->execute($query);
 		$totalfiltrados = count($result);
 
+if(isset($requestData['order'])){
 		$query.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."  LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
+}
 
-
+		
 		$rawQuery = $this->usuario->execute($query);
-
+		
 		
 //echo json_encode($rawQuery);
 		 
 		$json_data = array(
-			"draw" => intval($requestData['draw']),
+			"draw" =>intval($requestData['draw']),
 			"recordsTotal" => intval( $linhas ),  
 			"recordsFiltered" => intval( $totalfiltrados ),
 			"data" => $rawQuery

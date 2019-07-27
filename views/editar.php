@@ -47,7 +47,7 @@
     <div class="col-md-6">
       <label></label>
       <div class="form-group">
-            <input type="file" onchange="previewImagem()" name="foto" class="form-control" id="foto" placeholder='' />
+            <input type="file" onchange="previewImagem()" name="foto" class="form-control-file" id="foto" placeholder='' />
       </div>
     </div>
     <div class="col-md-6">

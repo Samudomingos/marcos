@@ -1,5 +1,5 @@
 <?php ob_start();
-$date = date('d/m/Y H:i:s');; ?>
+$date = date('d/m/Y');; ?>
 <head>    
  	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL ?>assets/css/style-pdf.css">
   	<link href="<?php echo BASE_URL ?>assets/css/jquery-ui.min.css" rel="stylesheet">

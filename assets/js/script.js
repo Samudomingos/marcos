@@ -76,13 +76,12 @@ function previewImagem(){
   }
 }
 
-function receber(){
-  var id = $('#id').val();
-  console.log(id);
+function receber(id){
+ 
   var qt = $('td').length;
 
   for (var i=0 ; i < qt; i+=7) {
-    if($('td')[i].innerHTML == id){
+    if($('td').eq(i).find('button').attr('id') == id){
       var  nome = $('td')[i+1].innerHTML;
       var cpf = $('td')[i+3].innerHTML;
 
